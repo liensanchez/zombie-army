@@ -1,5 +1,4 @@
-const { Router, response } = require('express');
-const weapons = require('../libs/models/weapons.model');
+const { Router } = require('express');
 const WeaponsService = require('../services/weapons.service')
 const router = Router();
 
