@@ -9,6 +9,8 @@ class WeaponsService {
 
     const options = {
       order: [['id', 'ASC']],
+      limit: 6,
+      offset: 0
     }
 
     options.where = {}
@@ -21,9 +23,24 @@ class WeaponsService {
       options.where.type = { [Op.like]: query.type }
     }
 
-    const response = await weapons.findAll(options)
+    if (query.page) {
+      const page = parseInt(query.page);
+      if (isNaN(page) || page < 1) {
+        throw new CustomError('Invalid page number', 440);
+      }
+      options.offset = (page - 1) * (options.limit || query.limit);
+    }
 
-    return response
+
+    const weaponsLimit = options.limit
+
+    const weaponsInFilter = await weapons.count(options);
+
+    const weaponsResponse = await weapons.findAll(options)
+
+
+    return { weaponsResponse, weaponsInFilter, weaponsLimit }
+    
   }
 
   async create (body) {

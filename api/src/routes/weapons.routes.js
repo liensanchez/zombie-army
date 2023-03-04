@@ -10,11 +10,23 @@ const service = new WeaponsService()
 router.get('/', async (req, res) => {
 
   try {
-    const weapons = await service.find(req.query)
+    const page = req.query.page || 1
 
-    const response = {weapons}
+    const weapons = await service.find(req.query, page)
+
+    let pages = ''
+
+    if(weapons.weaponsInFilter <= weapons.weaponsLimit){
+      pages = 1
+    } else {
+      pages = Math.ceil(weapons.weaponsInFilter / weapons.weaponsLimit)
+    }
+
+    const pageNumber = parseInt(page)
+
+    const response = {weapons, pageNumber, pages}
     res.json(response)
-  }catch (error) {
+  } catch (error) {
     res.json(error)
   }
 
