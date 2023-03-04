@@ -1,9 +1,12 @@
 const { Router } = require('express')
 const router = Router()
+const weaponsRoute = require('./weapons.routes')
 
 function routesApi(app) {
 
-  app.use("/api/v1", router)
+  app.use('/api/', router)
+
+  router.use('/weapons', weaponsRoute)
 
 }
 
