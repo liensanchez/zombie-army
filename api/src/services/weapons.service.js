@@ -59,6 +59,18 @@ class WeaponsService {
     return newWeapon
   }
 
+  async findID (id) {
+
+    const weaponResponse = await weapons.findOne({
+      where: {
+        id: id.id
+      }
+    })
+
+
+    return { weaponResponse }
+    
+  }
 }
 
 module.exports = WeaponsService;
