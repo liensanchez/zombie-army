@@ -24,11 +24,11 @@ class WeaponsService {
     }
 
     if (query.page) {
-      const page = parseInt(query.page);
+      const page = parseInt(query.page)
       if (isNaN(page) || page < 1) {
-        throw new CustomError('Invalid page number', 440);
+        throw new CustomError('Invalid page number', 440)
       }
-      options.offset = (page - 1) * (options.limit || query.limit);
+      options.offset = (page - 1) * (options.limit || query.limit)
     }
 
 
